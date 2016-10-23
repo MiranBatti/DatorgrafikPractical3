@@ -2,7 +2,6 @@ package com.example.miran.pervertexshadinglab;
 
 import android.content.Context;
 import android.opengl.GLES20;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,6 +74,16 @@ public class Icosahedron {
     private int uLightposHandle;
     private int positionHandle;
     private int normalHandle;
+
+    private int L_aHandle;
+    private int L_dHandle;
+    private int K_aHandle;
+    private int K_dHandle;
+
+    private float[] L_a = {0.5f, 0.5f, 0.5f, 0.5f}; //ambient part of light
+    private float[] L_d = {0.25f, 0.25f, 0.25f, 0.25f}; //diffuse part of light
+    private float[] K_a = {0.75f};//ambient reflection
+    private float[] K_d = {0.25f};//diffuse reflection
 
     private float[] lightpos = {1.45f, 1.45f, -1.45f, 1.0f};
 
@@ -157,6 +166,11 @@ public class Icosahedron {
         uLightposHandle = GLES20.glGetUniformLocation(mProgram, "lightpos");
         uColorHandle = GLES20.glGetUniformLocation(mProgram, "uColor");
 
+        L_dHandle = GLES20.glGetUniformLocation(mProgram, "L_d");
+        L_aHandle = GLES20.glGetUniformLocation(mProgram, "L_a");
+        K_dHandle = GLES20.glGetUniformLocation(mProgram, "K_d");
+        K_aHandle = GLES20.glGetUniformLocation(mProgram, "K_a");
+
         positionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
         GLES20.glEnableVertexAttribArray(positionHandle);
         GLES20.glVertexAttribPointer(positionHandle, VERTEX_POS_SIZE,
@@ -174,6 +188,12 @@ public class Icosahedron {
 
         GLES20.glUniform4fv(uLightposHandle, 1, lightpos, 0);
         GLES20.glUniform4fv(uColorHandle, 1, color, 0);
+
+        //Tilldela värden till handlers
+        GLES20.glUniform4fv(L_aHandle, 1, L_a, 0);
+        GLES20.glUniform4fv(L_dHandle, 1, L_d, 0);
+        GLES20.glUniform1fv(K_aHandle, 1, K_a, 0);
+        GLES20.glUniform1fv(K_dHandle, 1, K_d, 0);
 
         // Draw the triangle
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
