@@ -90,7 +90,7 @@ class CGRenderer implements GLSurfaceView.Renderer {
     private float[] mRotationMatrix = new float[16];
     private float[] CTM = new float[16];
 
-    private IcosahedronPerFragment mIcosahedron;
+    private Icosahedron mIcosahedron;
 
     public volatile float xAngle;
     public volatile float yAngle;
@@ -101,7 +101,7 @@ class CGRenderer implements GLSurfaceView.Renderer {
         GLES20.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
-        mIcosahedron = new IcosahedronPerFragment();
+        mIcosahedron = new Icosahedron();
     }
 
     @Override
