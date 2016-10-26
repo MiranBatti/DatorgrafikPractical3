@@ -64,7 +64,7 @@ public class Icosahedron {
     private final int mProgram;
 
     // Per-vertex shading:
-    private final String vertexShaderCode = readRawTextFile(MyGLSurfaceView.context, R.raw.vertex_shader);
+    private final String vertexShaderCode = readRawTextFile(MyGLSurfaceView.context, R.raw.per_vertex_shader);
 
     private final String fragmentShaderCode = readRawTextFile(MyGLSurfaceView.context, R.raw.fragment_shader);
 
@@ -80,12 +80,12 @@ public class Icosahedron {
     private int K_aHandle;
     private int K_dHandle;
 
-    private float[] L_a = {0.5f, 0.5f, 0.5f, 0.5f}; //ambient part of light
-    private float[] L_d = {0.25f, 0.25f, 0.25f, 0.25f}; //diffuse part of light
+    private float[] L_a = {0.5f, 0.25f, 0.5f, 0.5f}; //ambient part of light
+    private float[] L_d = {0.5f, 0.25f, 0.5f, 0.5f}; //diffuse part of light
     private float[] K_a = {0.75f};//ambient reflection
-    private float[] K_d = {0.25f};//diffuse reflection
+    private float[] K_d = {0.75f};//diffuse reflection
 
-    private float[] lightpos = {1.45f, 1.45f, -1.45f, 1.0f};
+    private float[] lightpos = {2.0f, 2.0f, -2.0f, 0.0f};
 
 
     public Icosahedron() {
@@ -96,17 +96,33 @@ public class Icosahedron {
         int posV = 0;
         int posN = 0;
 
-        for (int[] face : FACES) {
-            for (int vertexID : face) {
+        /**
+         * Ändringar av Viktor Hanstorp
+         */
+        for (int[] face : FACES)
+        {
+            float[] normal = new float[4];
+
+            for (int vertexID : face)
+            {
                 float[] vertexCoords = VERTICES[vertexID - 1];
-                for (float vertexCoord : vertexCoords) {
+                normal[0] = normal[0] + vertexCoords[0];
+                normal[1] = normal[1] + vertexCoords[1];
+                normal[2] = normal[2] + vertexCoords[2];
+
+                for (float vertexCoord : vertexCoords)
+                {
                     vertexData[posV++] = vertexCoord;
                 }
-                float[] normalCoords = VERTEX_NORMALS[vertexID - 1];
-                for (float normalCoord : normalCoords) {
+            }
+            for(int vertexID : face)
+            {
+                for (float normalCoord : normal)
+                {
                     normalDataPerVertex[posN++] = normalCoord;
                 }
             }
+
         }
 
         vertexCount = vertexData.length / VERTEX_ATTRIB_SIZE;
@@ -201,6 +217,14 @@ public class Icosahedron {
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(positionHandle);
         GLES20.glDisableVertexAttribArray(normalHandle);
+
+        GLES20.glDisableVertexAttribArray(L_aHandle);
+        GLES20.glDisableVertexAttribArray(L_dHandle);
+        GLES20.glDisableVertexAttribArray(K_aHandle);
+        GLES20.glDisableVertexAttribArray(K_dHandle);
+        GLES20.glDisableVertexAttribArray(uLightposHandle);
+        GLES20.glDisableVertexAttribArray(mMVPMatrixHandle);
+        GLES20.glDisableVertexAttribArray(uColorHandle);
 
         GLES20.glUseProgram(0);
     }
