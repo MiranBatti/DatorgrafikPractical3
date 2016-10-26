@@ -19,12 +19,6 @@ public class Icosahedron {
     static final int VERTEX_POS_SIZE = 4;
     static final int NORMAL_SIZE = 4;
 
-    static final int VERTEX_POS_INDEX = 0;
-    static final int NORMAL_INDEX = 0;
-
-    static final int VERTEX_POS_OFFSET = 0;
-    static final int NORMAL_OFFSET = 0;
-
     static final int VERTEX_ATTRIB_SIZE = VERTEX_POS_SIZE;
     static final int NORMAL_ATTRIB_SIZE = NORMAL_SIZE;
 
@@ -80,12 +74,12 @@ public class Icosahedron {
     private int K_aHandle;
     private int K_dHandle;
 
-    private float[] L_a = {0.5f, 0.25f, 0.5f, 0.5f}; //ambient part of light
-    private float[] L_d = {0.5f, 0.25f, 0.5f, 0.5f}; //diffuse part of light
+    private float[] L_a = {0.75f, 0.25f, 0.5f, 1f}; //ambient part of light
+    private float[] L_d = {0.75f, 0.25f, 0.5f, 1f}; //diffuse part of light
     private float[] K_a = {0.75f};//ambient reflection
     private float[] K_d = {0.75f};//diffuse reflection
 
-    private float[] lightpos = {2.0f, 2.0f, -2.0f, 0.0f};
+    private float[] lightpos = {2.0f, 2.0f, -2.0f, 1.0f};
 
 
     public Icosahedron() {
@@ -224,7 +218,6 @@ public class Icosahedron {
         GLES20.glDisableVertexAttribArray(K_dHandle);
         GLES20.glDisableVertexAttribArray(uLightposHandle);
         GLES20.glDisableVertexAttribArray(mMVPMatrixHandle);
-        GLES20.glDisableVertexAttribArray(uColorHandle);
 
         GLES20.glUseProgram(0);
     }
