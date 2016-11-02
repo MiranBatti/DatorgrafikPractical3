@@ -35,13 +35,6 @@ public class Icosahedron {
             { 0.0f, -0.525731f, -0.850651f, 1.0f }, { 0.0f, 0.525731f, -0.850651f, 1.0f },
             { 0.0f, 0.525731f, 0.850651f, 1.0f } };
 
-    public static final float VERTEX_NORMALS[][] = { { 0.0f, -0.525731f, 0.850651f, 0.0f },
-            { 0.850651f, 0.0f, 0.525731f, 0.0f }, { 0.850651f, 0.0f, -0.525731f, 0.0f },
-            { -0.850651f, 0.0f, -0.525731f, 0.0f }, { -0.850651f, 0.0f, 0.525731f, 0.0f },
-            { -0.525731f, 0.850651f, 0.0f, 0.0f }, { 0.525731f, 0.850651f, 0.0f, 0.0f },
-            { 0.525731f, -0.850651f, 0.0f, 0.0f }, { -0.525731f, -0.850651f, 0.0f, 0.0f },
-            { 0.0f, -0.525731f, -0.850651f, 0.0f }, { 0.0f, 0.525731f, -0.850651f, 0.0f },
-            { 0.0f, 0.525731f, 0.850651f, 0.0f } };
 
     public static final int FACES[][] = { { 2, 3, 7 }, { 2, 8, 3 }, { 4, 5, 6 }, { 5, 4, 9 }, { 7, 6, 12 },
             { 6, 7, 11 }, { 10, 11, 3 }, { 11, 10, 4 }, { 8, 9, 10 }, { 9, 8, 1 }, { 12, 1, 2 }, { 1, 12, 5 },
@@ -212,16 +205,11 @@ public class Icosahedron {
         GLES20.glDisableVertexAttribArray(positionHandle);
         GLES20.glDisableVertexAttribArray(normalHandle);
 
-        GLES20.glDisableVertexAttribArray(L_aHandle);
-        GLES20.glDisableVertexAttribArray(L_dHandle);
-        GLES20.glDisableVertexAttribArray(K_aHandle);
-        GLES20.glDisableVertexAttribArray(K_dHandle);
-        GLES20.glDisableVertexAttribArray(uLightposHandle);
-        GLES20.glDisableVertexAttribArray(mMVPMatrixHandle);
-
         GLES20.glUseProgram(0);
     }
 
+    /* Hämtat från: https://github.com/dinamicoplus/OpenGL_test/blob/408b2d7ca6ee73c0f239c0050cd34c9c36232328/app/src/main/java/net/brisan/opengl_test/Cube.java
+     */
     public static String readRawTextFile(Context ctx, int resId)
     {
         InputStream inputStream = ctx.getResources().openRawResource(resId);
